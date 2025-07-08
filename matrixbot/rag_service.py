@@ -47,7 +47,7 @@ class RAGService:
         docs = list(
             set(f"- <{doc['source']}>" for doc in data["relevant_docs"])
         )
-        src_docs = "\n ### Source Docements:\n" + "\n".join(docs)
+        src_docs = "\n### Source Docements:\n" + "\n".join(docs)
 
         response_text = response_text + src_docs
 
