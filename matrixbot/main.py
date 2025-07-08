@@ -18,7 +18,7 @@ async def main():
 
     nio_client = AsyncClient(config.homeserver, config.username)
     matrix_client = MatrixClient(nio_client, config)
-    history = HistoryManager()
+    history = HistoryManager(config.history_size)
     rag = RAGService(config)
     commands = CommandHandler(matrix_client, rag, history, config, logger)
 
