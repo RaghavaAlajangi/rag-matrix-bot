@@ -8,21 +8,21 @@ class CommandHandler:
         self.config = config
         self.logger = logger
 
-    async def handle_ai(self, room_id, message_parts, sender):
+    async def handle_ai(self, room_id, message_parts, user):
         prompt = " ".join(message_parts[1:])
-        await self.history_manager.add("user", room_id, prompt, sender)
+        await self.history_manager.add("user", room_id, prompt, user)
         self.logger.info(f"Querying rag with prompt: {prompt}")
-        chat_history = self.history_manager.get(room_id, sender)
+        chat_history = self.history_manager.get(room_id, user)
         response = await self.rag_service.query_model(
             prompt, chat_history, self.logger
         )
-        await self.history_manager.add("assistant", room_id, response, sender)
+        await self.history_manager.add("assistant", room_id, response, user)
         await self.matrix_client.send_message(room_id, response)
 
-    async def handle_reset(self, room_id, sender):
-        await self.history_manager.reset(room_id, sender)
+    async def handle_reset(self, room_id, user):
+        await self.history_manager.reset(room_id, user)
         await self.matrix_client.send_message(
-            room_id, f"{sender} conversation history reset."
+            room_id, f"{user} conversation history reset."
         )
 
     async def handle_help(self, room_id):
