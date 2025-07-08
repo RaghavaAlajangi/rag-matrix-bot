@@ -27,7 +27,7 @@ class CommandHandler:
     async def handle_help(self, room_id):
         help_message = """
         🤖 Available commands:\n
-        -------------------\n
+        ---------------------\n
         <prompt> - Generate AI response.\n
         .reset - Reset conversation.\n
         .help - Show help.\n
