@@ -10,6 +10,16 @@ class MatrixClient:
         self.config = config
 
     async def send_message(self, room_id, message):
+        """
+        Send a markdown-formatted message.
+
+        Parameters
+        ----------
+        room_id : str
+            Room ID to send the message to.
+        message : str
+            Plaintext message.
+        """
         markdown_format = markdown(
             message,
             extensions=[
