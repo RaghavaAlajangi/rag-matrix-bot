@@ -7,15 +7,27 @@ class RAGService:
         self.model = config.rag_model
 
     async def query_model(self, prompt, chat_history, logger):
-        # async with aiohttp.ClientSession() as session:
+        """
+        Query RAG API.
+
+        Parameters
+        ----------
+        prompt : str
+            Latest prompt.
+        chat_history : list
+            Chat history.
+        logger : logging.Logger
+            Logger instance for logging information.
+        Returns
+        -------
+        str
+            Generated answer.
+        """
         payload = {
             "model": self.model,
             "prompt": prompt,
             "chat_history": chat_history,
         }
-        # async with session.post(self.api_url, json=payload) as resp:
-        #     data = await resp.json()
-        #     response_text = data.get("answer", "").strip()
 
         response = requests.post(self.api_url, json=payload)
         response.raise_for_status()
