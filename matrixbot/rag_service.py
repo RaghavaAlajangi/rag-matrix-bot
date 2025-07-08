@@ -2,6 +2,16 @@ import requests
 
 
 class RAGService:
+    """
+    Service to handle retrieval-augmented generation (RAG) queries.
+    This service interacts with a RAG API to generate responses based on user
+    prompts and chat history.
+    Parameters
+    ----------
+    config : Config
+        Configuration object containing RAG API URL and model.
+    """
+
     def __init__(self, config):
         self.api_url = config.rag_api_url
         self.model = config.rag_model
