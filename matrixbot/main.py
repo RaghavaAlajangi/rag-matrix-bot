@@ -47,7 +47,7 @@ async def main():
             else:
                 await commands.handle_ai(
                     channel=room.room_id,
-                    message_parts=content.split(),
+                    query=content,
                     sender=sender,
                 )
 
