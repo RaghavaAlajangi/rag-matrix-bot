@@ -1,4 +1,4 @@
-# import asyncio
+import asyncio
 import datetime
 
 from nio import AsyncClient, InviteEvent, RoomMessageText
@@ -62,7 +62,7 @@ async def main():
     try:
         logger.info("Starting Matrix sync loop...")
         await nio_client.sync_forever(timeout=30000, full_state=True)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, asyncio.CancelledError):
         logger.info("Received exit signal, shutting down...")
     finally:
         logger.info("Logging out and closing Matrix client...")
