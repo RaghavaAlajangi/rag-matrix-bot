@@ -1,9 +1,12 @@
 import logging
-import logging.config
 import sys
 
 
 class Logger(logging.Logger):
+    """
+    Custom logger class for Matrix bot.
+    """
+
     def __init__(
         self, name, level="INFO", filename="matrixbot.log", save_logfile=False
     ):
@@ -21,13 +24,6 @@ class Logger(logging.Logger):
 
         if save_logfile:
             self.set_filename(filename)
-
-        # logging.config.dictConfig(
-        #     {
-        #         "version": 1,
-        #         "disable_existing_loggers": True,
-        #     }
-        # )
 
     def set_filename(self, filename):
         self.filename = filename
