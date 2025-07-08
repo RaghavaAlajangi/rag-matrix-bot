@@ -35,18 +35,19 @@ async def main():
         message_time = datetime.datetime.fromtimestamp(message_time)
         content = event.body.strip()
         sender = event.sender
+        room_id = room.room_id
 
         if message_time > join_time:
             if content.startswith(".help"):
-                await commands.handle_help(channel=room.room_id)
+                await commands.handle_help(room_id=room_id)
             elif content.startswith(".reset"):
                 await commands.handle_reset(
-                    channel=room.room_id,
+                    room_id=room_id,
                     sender=sender,
                 )
             else:
                 await commands.handle_ai(
-                    channel=room.room_id,
+                    channel=room_id,
                     query=content,
                     sender=sender,
                 )
