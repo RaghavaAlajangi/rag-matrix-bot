@@ -50,6 +50,7 @@ class RAGService:
             thinking, response_text = response_text.split("</think>")
             thinking = thinking.strip("<think>").strip()
             logger.info(f"Model thinking for: {thinking}")
+
         if "<|begin_of_thought|>" in response_text:
             parts = response_text.split("<|end_of_thought|>")
             if len(parts) > 1:
@@ -65,12 +66,5 @@ class RAGService:
         if "<|begin_of_solution|>" in response_text:
             parts = response_text.split("<|end_of_solution|>")
             response_text = parts[0].split("<|begin_of_solution|>")[1].strip()
-
-        docs = list(
-            set(f"- <{doc['source']}>" for doc in data["relevant_docs"])
-        )
-        src_docs = "\n### Source Docements:\n" + "\n".join(docs)
-
-        response_text = response_text + src_docs
 
         return response_text.strip()
