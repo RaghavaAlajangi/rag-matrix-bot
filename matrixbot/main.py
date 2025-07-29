@@ -47,9 +47,9 @@ async def main():
                 )
             else:
                 await commands.handle_ai(
-                    channel=room_id,
+                    room_id=room_id,
                     query=content,
-                    sender=sender,
+                    user=sender,
                 )
 
     async def invite_callback(room, event):
