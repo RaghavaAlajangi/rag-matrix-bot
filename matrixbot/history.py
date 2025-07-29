@@ -1,6 +1,3 @@
-# from collections import defaultdict
-
-
 class HistoryManager:
     """
     Manages conversation history for users in different rooms.
