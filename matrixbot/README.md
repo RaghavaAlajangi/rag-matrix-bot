@@ -1,1 +1,4 @@
-# matrixbot
+### Run matrixbot
+```bash
+python -m matrixbot
+```
