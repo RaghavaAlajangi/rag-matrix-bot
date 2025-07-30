@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from nio import LoginResponse
 
 load_dotenv()
-resources_path = Path(__file__).parents[1] / "resources"
+resources_path = Path(__file__).parent / "resources"
 
 
 class Config:
@@ -19,17 +19,17 @@ class Config:
         self.rag_model = os.getenv("RAG_MODEL")
         self.history_size = int(os.getenv("HISTORY_SIZE", 30))
 
-        self.JSON_CRED_FILE = resources_path / "login_creds.json"
         self.access_token = None
         self.device_id = None
+        self.json_path = resources_path / "login_creds.json"
         self.store_path = resources_path / "nio_store"
         self.store_path.mkdir(exist_ok=True)
 
     def load_saved_login_creds(self):
         """Load saved credentials from local json file."""
-        if not self.JSON_CRED_FILE.exists():
+        if not self.json_path.exists():
             return False
-        with open(self.JSON_CRED_FILE, "r") as f:
+        with open(self.json_path, "r") as f:
             credentials = json.load(f)
             self.username = credentials["user_id"]
             self.device_id = credentials["device_id"]
@@ -59,5 +59,4 @@ class Config:
             )
 
 
-def load_config():
-    return Config()
+bot_config = Config()
