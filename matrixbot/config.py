@@ -24,6 +24,7 @@ class Config:
         self.store_path.mkdir(exist_ok=True)
 
     def load_saved_login_creds(self):
+        """Load saved credentials from local json file."""
         if not self.JSON_CRED_FILE.exists():
             return False
         with open(self.JSON_CRED_FILE, "r") as f:
