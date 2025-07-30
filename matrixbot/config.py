@@ -2,8 +2,10 @@ import json
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from nio import LoginResponse
 
+load_dotenv()
 resources_path = Path(__file__).parents[1] / "resources"
 
 
