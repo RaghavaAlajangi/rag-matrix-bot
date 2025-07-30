@@ -21,7 +21,9 @@ class HistoryManager:
         user : str
             User ID.
         """
-        self.histories[room_id][user] = []
+        if room_id in self.histories:
+            if user in self.histories[room_id]:
+                self.histories[room_id][user] = []
 
     async def add(self, role, room_id, content, user):
         """
