@@ -1,4 +1,10 @@
+import json
 import os
+from pathlib import Path
+
+from nio import LoginResponse
+
+resources_path = Path(__file__).parents[1] / "resources"
 
 
 class Config:
@@ -6,9 +12,48 @@ class Config:
         self.homeserver = os.getenv("MATRIX_HOMESERVER")
         self.username = os.getenv("MATRIX_BOT_USERNAME")
         self.password = os.getenv("MATRIX_BOT_PASSWORD")
+        self.nio_bot_name = os.getenv("MATRIX_BOT_NAME")
         self.rag_api_url = os.getenv("RAG_API_URL")
         self.rag_model = os.getenv("RAG_MODEL")
         self.history_size = int(os.getenv("HISTORY_SIZE", 30))
+
+        self.JSON_CRED_FILE = resources_path / "login_creds.json"
+        self.access_token = None
+        self.device_id = None
+        self.store_path = resources_path / "nio_store"
+        self.store_path.mkdir(exist_ok=True)
+
+    def load_saved_login_creds(self):
+        if not self.JSON_CRED_FILE.exists():
+            return False
+        with open(self.JSON_CRED_FILE, "r") as f:
+            credentials = json.load(f)
+            self.username = credentials["user_id"]
+            self.device_id = credentials["device_id"]
+            self.access_token = credentials["access_token"]
+            self.homeserver = credentials["homeserver"]
+        return True
+
+    def save_login_details(self, response: LoginResponse):
+        """Writes the required login details to disk so we can log in later
+        without using a password.
+
+        Parameters
+        ----------
+        response : LoginResponse
+            The successful client login response.
+        """
+        with open(self.JSON_CRED_FILE, "w") as file:
+            json.dump(
+                {
+                    "homeserver": self.homeserver,
+                    "user_id": response.user_id,
+                    "device_id": response.device_id,
+                    "access_token": response.access_token,
+                },
+                file,
+                indent=4,
+            )
 
 
 def load_config():

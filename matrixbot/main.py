@@ -1,7 +1,7 @@
 import asyncio
 import datetime
 
-from nio import AsyncClient, InviteEvent, RoomMessageText
+from nio import AsyncClient, InviteEvent, LoginResponse, RoomMessageText
 
 from .commands import CommandHandler
 from .config import load_config
@@ -16,15 +16,44 @@ logger = Logger(name="RAG Pipeline")
 async def main():
     config = load_config()
 
+    # Use stored login creds if available
+    use_saved_creds = config.load_saved_login_creds()
+
+    if use_saved_creds:
+        logger.info("Using saved credentials.")
+        nio_client = AsyncClient(
+            config.homeserver,
+            config.username,
+            device_id=config.device_id,
+            store_path=str(config.store_path),
+        )
+        nio_client.access_token = config.access_token
+    else:
+        logger.info("No saved credentials. Logging in with password.")
+        nio_client = AsyncClient(
+            config.homeserver,
+            config.username,
+            store_path=str(config.store_path),
+        )
+        # Login
+        resp = await nio_client.login(
+            config.password, device_name=config.nio_bot_name
+        )
+
+        if isinstance(resp, LoginResponse):
+            logger.info("Login successful. Saving credentials.")
+            config.save_login_details(resp)
+        else:
+            logger.error(f"Login failed: {resp}")
+            return
+
     nio_client = AsyncClient(config.homeserver, config.username)
     matrix_client = MatrixClient(nio_client, config)
     history = HistoryManager(config.history_size)
     rag = RAGService(config)
     commands = CommandHandler(matrix_client, rag, history, config, logger)
 
-    # Login to Matrix
-    logger.info("Logging in...")
-    await nio_client.login(config.password, device_name="RAGbot")
+    # Joining time of the bot
     join_time = datetime.datetime.now()
 
     async def on_message(room, event):
@@ -43,7 +72,7 @@ async def main():
             elif content.startswith(".reset"):
                 await commands.handle_reset(
                     room_id=room_id,
-                    sender=sender,
+                    user=sender,
                 )
             else:
                 await commands.handle_ai(
@@ -62,10 +91,13 @@ async def main():
 
     try:
         logger.info("Starting Matrix sync loop...")
+        # full_state=True here to pull any room invites that occurred or
+        # messages sent in rooms before this program connected to the
+        # Matrix server
         await nio_client.sync_forever(timeout=30000, full_state=True)
+
     except (KeyboardInterrupt, asyncio.CancelledError):
         logger.info("Received exit signal, shutting down...")
     finally:
-        logger.info("Logging out and closing Matrix client...")
-        await nio_client.logout()
+        logger.info("Closing Matrix client...")
         await nio_client.close()
