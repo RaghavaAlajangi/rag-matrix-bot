@@ -44,27 +44,21 @@ class RAGService:
         data = response.json()
 
         response_text = data["answer"]
+        quoted_reasoning = ""
 
         # Check for different types of thought/solution delimiters
         if "<think>" in response_text:
             thinking, response_text = response_text.split("</think>")
             thinking = thinking.strip("<think>").strip()
-            logger.info(f"Model thinking for: {thinking}")
+            quoted_reasoning = "\n".join(
+                [f"> {line}" for line in thinking.splitlines()]
+            )
 
-        if "<|begin_of_thought|>" in response_text:
-            parts = response_text.split("<|end_of_thought|>")
-            if len(parts) > 1:
-                thinking = (
-                    parts[0]
-                    .strip("<|begin_of_thought|>")
-                    .strip("<|end_of_thought|>")
-                )
-                response_text = parts[1]
-                self.log(f"Model thinking for: {thinking}")
+        # Compose final response with reasoning quote
+        final_response = (
+            f"{quoted_reasoning}\n\n\n{response_text}"
+            if quoted_reasoning
+            else response_text
+        )
 
-        # Check for solution delimiters and clean them up
-        if "<|begin_of_solution|>" in response_text:
-            parts = response_text.split("<|end_of_solution|>")
-            response_text = parts[0].split("<|begin_of_solution|>")[1].strip()
-
-        return response_text.strip()
+        return final_response

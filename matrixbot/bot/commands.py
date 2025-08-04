@@ -41,13 +41,29 @@ class CommandHandler:
             User ID of the person who sent the query.
         """
         await self.history_manager.add("user", room_id, query, user)
-        self.logger.info(f"Querying rag with prompt: {query}")
+        self.logger.info(f"Querying RAG with prompt: {query}")
         chat_history = self.history_manager.get(room_id, user)
+
+        # Send the "thinking..." placeholder and keep the event_id
+        placeholder_event = await self.matrix_client.send_message(
+            room_id, ">🤖 Thinking...", return_event_id=True
+        )
+        self.logger.info("Send `thinking` message..")
+
+        # Query your RAG model
         response = await self.rag_service.query_model(
             query, chat_history, self.logger
         )
+
+        # Store to history
         await self.history_manager.add("assistant", room_id, response, user)
-        await self.matrix_client.send_message(room_id, response)
+
+        # Replace the placeholder with the actual final response
+        await self.matrix_client.edit_message(
+            room_id=room_id,
+            event_id=placeholder_event,
+            new_message=response,
+        )
 
     async def handle_reset(self, room_id, user):
         """
