@@ -46,7 +46,7 @@ class Config:
         response : LoginResponse
             The successful client login response.
         """
-        with open(self.JSON_CRED_FILE, "w") as file:
+        with open(self.json_path, "w") as file:
             json.dump(
                 {
                     "homeserver": self.homeserver,
