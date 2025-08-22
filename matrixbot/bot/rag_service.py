@@ -16,6 +16,32 @@ class RAGService:
         self.api_url = config.rag_api_url
         self.model = config.rag_model
 
+    @staticmethod
+    def _details_block(drop_head, message):
+        return (
+            f"<details>\n"
+            f"<summary><strong>{drop_head}</strong></summary>\n"
+            f"<p>{message}</p>\n"
+            f"</details>"
+        )
+
+    @staticmethod
+    def _format_reasoning(response_text):
+        """Extract and format reasoning block if present."""
+        if "<think>" in response_text:
+            thinking, answer = response_text.split("</think>", 1)
+            thinking = thinking.replace("<think>", "").strip()
+            formatted_thinking = "<br>".join(
+                line for line in thinking.splitlines()
+            )
+            return (
+                RAGService._details_block(
+                    "Model Reasoning:", formatted_thinking
+                ),
+                answer.strip(),
+            )
+        return "", response_text.strip()
+
     async def query_model(self, prompt, chat_history, logger):
         """
         Query RAG API.
@@ -43,22 +69,35 @@ class RAGService:
         response.raise_for_status()
         data = response.json()
 
-        response_text = data["answer"]
-        quoted_reasoning = ""
+        # async with httpx.AsyncClient() as client:
+        #     resp = await client.post(self.api_url, json=payload)
+        #     resp.raise_for_status()
+        #     data = resp.json()
 
-        # Check for different types of thought/solution delimiters
-        if "<think>" in response_text:
-            thinking, response_text = response_text.split("</think>")
-            thinking = thinking.strip("<think>").strip()
-            quoted_reasoning = "\n".join(
-                [f"> {line}" for line in thinking.splitlines()]
-            )
+        reasoning_block, answer = self._format_reasoning(data["answer"])
 
-        # Compose final response with reasoning quote
-        final_response = (
-            f"{quoted_reasoning}\n\n\n{response_text}"
-            if quoted_reasoning
-            else response_text
+        # Add separators only if blocks exist
+        if reasoning_block:
+            reasoning_block += "\n<hr>\n"
+        if answer:
+            answer += "\n<hr>\n"
+
+        # Collect unique source names from relevant documents
+        source_names = set(
+            doc.get("source") or doc.get("title") or "Unknown"
+            for doc in data.get("relevant_docs", [])
         )
 
-        return final_response
+        # Format the answer with reasoning and relevant documents
+        docs_block = (
+            self._details_block(
+                "Relevant Documents:",
+                "\n".join(f"- {name} <br>" for name in source_names),
+            )
+            if source_names
+            else ""
+        )
+
+        return "\n\n\n".join(
+            block for block in (reasoning_block, answer, docs_block) if block
+        )
