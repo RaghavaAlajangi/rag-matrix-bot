@@ -3,12 +3,12 @@ import datetime
 
 from nio import AsyncClient, InviteEvent, LoginResponse, RoomMessageText
 
-from ..config import bot_config
-from .commands import CommandHandler
-from .history import HistoryManager
-from .logger import Logger
-from .matrix_client import MatrixClient
-from .rag_service import RAGService
+from .core.commands import CommandHandler
+from .core.config import bot_config
+from .core.history import HistoryManager
+from .core.logger import Logger
+from .core.matrix_client import MatrixClient
+from .core.rag_service import RAGService
 
 logger = Logger(name="RAG Pipeline")
 
@@ -95,7 +95,7 @@ async def main():
         # full_state=True here to pull any room invites that occurred or
         # messages sent in rooms before this program connected to the
         # Matrix server
-        await nio_client.sync_forever(timeout=30000, full_state=True)
+        await nio_client.sync_forever(timeout=30000, full_state=False)
 
     except (KeyboardInterrupt, asyncio.CancelledError):
         logger.info("Received exit signal, shutting down...")
