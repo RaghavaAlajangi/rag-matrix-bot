@@ -29,6 +29,7 @@ class MatrixClient:
                 "sane_lists",
                 "tables",
                 "codehilite",
+                "md_in_html",
             ],
         )
         response = await self.client.room_send(
