@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from nio import LoginResponse
 
 load_dotenv()
-resources_path = Path(__file__).parents[1] / "resources"
+resources_path = Path(__file__).parents[2] / "resources"
 
 
 class Config:

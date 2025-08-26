@@ -1,4 +1,4 @@
 ### Run matrixbot
 ```bash
-python -m matrixbot.app
+python -m matrixbot.bot
 ```
