@@ -23,6 +23,12 @@ class Config:
         self.history_size = int(os.getenv("HISTORY_SIZE", 30))
         self.rag_api_url_key = os.getenv("RAG_API_KEY")
 
+        # User history (Redis)
+        self.redis_host = os.getenv("REDIS_HOST")
+        self.redis_port = int(os.getenv("REDIS_PORT"))
+        self.redis_db = int(os.getenv("REDIS_DB"))
+        self.redis_history_size = int(os.getenv("REDIS_HISTORY_SIZE"))
+
         # Login credentials (saved after first login for reuse)
         self.access_token = None
         self.device_id = None

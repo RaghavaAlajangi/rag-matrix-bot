@@ -5,7 +5,7 @@ from nio import AsyncClient, InviteEvent, LoginResponse, RoomMessageText
 
 from .core.commands import CommandHandler
 from .core.config import bot_config
-from .core.history import HistoryManager
+from .core.history import RedisHistoryManager
 from .core.logger import Logger
 from .core.matrix_client import MatrixClient
 from .core.rag_service import RAGService
@@ -47,7 +47,7 @@ async def main():
             return
 
     matrix_client = MatrixClient(nio_client, bot_config)
-    history = HistoryManager(bot_config.history_size)
+    history = RedisHistoryManager(bot_config)
     rag = RAGService(bot_config)
     commands = CommandHandler(matrix_client, rag, history, bot_config, logger)
 
@@ -70,13 +70,13 @@ async def main():
             elif content.startswith(".reset"):
                 await commands.handle_reset(
                     room_id=room_id,
-                    user=sender,
+                    user_id=sender,
                 )
             else:
                 await commands.handle_ai(
                     room_id=room_id,
+                    user_id=sender,
                     query=content,
-                    user=sender,
                 )
 
     async def invite_callback(room, event):
