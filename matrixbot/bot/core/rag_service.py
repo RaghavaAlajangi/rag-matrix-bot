@@ -15,6 +15,7 @@ class RAGService:
     def __init__(self, config):
         self.api_url = config.rag_api_url
         self.model = config.rag_model
+        self.rag_api_key = config.rag_api_key
 
     @staticmethod
     def _details_block(drop_head, message):
@@ -64,8 +65,12 @@ class RAGService:
             "prompt": prompt,
             "chat_history": chat_history,
         }
+        headers = {
+            "X-Internal-Token": self.rag_api_key,
+            "Content-Type": "application/json",
+        }
 
-        response = requests.post(self.api_url, json=payload)
+        response = requests.post(self.api_url, json=payload, headers=headers)
         response.raise_for_status()
         data = response.json()
 

@@ -11,14 +11,19 @@ resources_path = Path(__file__).parents[2] / "resources"
 
 class Config:
     def __init__(self):
+        # Matrix variables (bot user)
         self.homeserver = os.getenv("MATRIX_HOMESERVER")
         self.username = os.getenv("MATRIX_BOT_USERNAME")
         self.password = os.getenv("MATRIX_BOT_PASSWORD")
         self.nio_bot_name = os.getenv("MATRIX_BOT_NAME")
+
+        # RAG variables (FastAPI service)
         self.rag_api_url = os.getenv("RAG_API_URL")
         self.rag_model = os.getenv("RAG_MODEL")
         self.history_size = int(os.getenv("HISTORY_SIZE", 30))
+        self.rag_api_url_key = os.getenv("RAG_API_KEY")
 
+        # Login credentials (saved after first login for reuse)
         self.access_token = None
         self.device_id = None
         self.json_path = resources_path / "login_creds.json"
