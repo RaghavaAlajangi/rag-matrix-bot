@@ -45,19 +45,3 @@ class RedisHistoryManager:
         self.redis_client.rpush(key, message)
         # Trim the list to ensure we don't exceed the history size
         self.redis_client.ltrim(key, -self.history_size, -1)
-
-
-if __name__ == "__main__":
-    from config import bot_config
-
-    his = RedisHistoryManager(bot_config)
-
-    async def test():
-        await his.add("room1", "user", "Hello", "user1")
-        await his.add("room1", "assistant", "Hi there!", "user1")
-
-        print(his.get("room1", "user1"))
-
-    import asyncio
-
-    asyncio.run(test())
