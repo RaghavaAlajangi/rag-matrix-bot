@@ -1,0 +1,52 @@
+version: '3.8'
+
+# Define named volumes for persistent data storage
+volumes:
+  qdrant_data:
+  redis_data:
+
+services:
+  # RAG Backend Service
+  rag_backend:
+    build:
+      context: ./rag_backend
+    container_name: rag_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./rag_backend/.env
+    depends_on:
+      - qdrant_db  # The backend depends on the vector database
+    restart: always
+
+  # Matrix Bot Service
+  matrix_bot:
+    build:
+      context: ./matrixbot
+    container_name: matrix_bot
+    env_file:
+      - ./matrixbot/.env
+    depends_on:
+      - rag_backend  # The bot depends on the backend API
+      - redis_db    # The bot depends on Redis for session management
+    restart: always
+  
+  # Qdrant Vector Database
+  qdrant_db:
+    image: qdrant/qdrant:latest
+    container_name: qdrant_vector_db
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage # Persists your vector data
+    restart: always
+
+  # Redis Database for caching
+  redis_db:
+    image: redis:latest
+    container_name: redis_session_db
+    volumes:
+      - redis_data:/data # Persists Redis data
+    restart: always
+
