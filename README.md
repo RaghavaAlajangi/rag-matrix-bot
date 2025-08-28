@@ -43,7 +43,7 @@
 │   ├── requirements.txt
 │   └── tests/
 │
-├── docker-compose.yml
+├── docker-compose.yaml
 └── README.md
 
 ```
