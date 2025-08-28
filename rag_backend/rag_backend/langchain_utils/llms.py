@@ -4,7 +4,7 @@ from openai import OpenAI
 from ..core.config import rag_config
 
 openai_client = OpenAI(
-    api_key=rag_config.OPENAPI_KEY, base_url=rag_config.OPENAPI_ENDPOINT
+    api_key=rag_config.OPENAI_API_KEY, base_url=rag_config.OPENAI_ENDPOINT
 )
 
 
@@ -17,8 +17,8 @@ def llm_generator(model_name):
     """
     return ChatOpenAI(
         model_name=model_name,
-        api_key=rag_config.OPENAPI_KEY,
-        base_url=rag_config.OPENAPI_ENDPOINT,
+        api_key=rag_config.OPENAI_API_KEY,
+        base_url=rag_config.OPENAI_ENDPOINT,
         temperature=0,
     )
 
@@ -26,9 +26,9 @@ def llm_generator(model_name):
 def llm_embedder():
     """Initialize and return an OpenAIEmbeddings instance."""
     return OpenAIEmbeddings(
-        model=rag_config.OPENAPI_EMBEDDING_MODEL_NAME,
-        openai_api_base=rag_config.OPENAPI_ENDPOINT,
-        openai_api_key=rag_config.OPENAPI_KEY,
+        model=rag_config.OPENAI_EMBEDDING_MODEL_NAME,
+        openai_api_base=rag_config.OPENAI_ENDPOINT,
+        openai_api_key=rag_config.OPENAI_API_KEY,
         tiktoken_model_name=None,
         model_kwargs={"encoding_format": "float"},
     )
