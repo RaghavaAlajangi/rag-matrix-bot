@@ -9,10 +9,10 @@ class Config:
     """Configuration class to manage environment variables."""
 
     # Vector DB params
-    VECTORDB_HOST = os.getenv("VECTORDB_HOST", "localhost")
-    VECTORDB_PORT = os.getenv("VECTORDB_PORT", "6333")
+    VECTORDB_HOST = os.getenv("VECTORDB_HOST")
+    VECTORDB_PORT = os.getenv("VECTORDB_PORT")
     VECTORDB_COLLECTION = os.getenv("VECTORDB_COLLECTION")
-    VECTORDB_TOPK = os.getenv("VECTORDB_TOPK", 5)
+    VECTORDB_TOPK = os.getenv("VECTORDB_TOPK")
 
     # LLM API key from GWDG
     GWDG_API_KEY = os.getenv("GWDG_API_KEY")

@@ -13,8 +13,8 @@ class RAGService:
 
     def __init__(self, config):
         self.api_url = config.rag_api_url
-        self.model = config.rag_model
         self.rag_api_key = config.rag_api_key
+        self.model = config.rag_model
 
     @staticmethod
     def _details_block(drop_head, message):
