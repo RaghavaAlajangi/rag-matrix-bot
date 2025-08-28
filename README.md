@@ -3,13 +3,11 @@
 <!-- [![CI](https://github.com/RaghavaAlajangi/rag-matrix-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/RaghavaAlajangi/rag-matrix-bot/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/RaghavaAlajangi/rag-matrix-bot/branch/main/graph/badge.svg?token=Z4FAPNDJWN)](https://codecov.io/gh/RaghavaAlajangi/rag-matrix-bot) -->
 
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![LangChain](https://img.shields.io/badge/LangChain-RAG-brightgreen)](https://www.langchain.com/)
 [![Qdrant](https://img.shields.io/badge/Vector%20DB-Qdrant-orange)](https://qdrant.tech/)
-[![License](https://img.shields.io/github/license/RaghavaAlajangi/rag-matrix-bot)](LICENSE)  
+[![License](https://img.shields.io/github/license/RaghavaAlajangi/rag-matrix-bot)](LICENSE)
 [![Redis](https://img.shields.io/badge/ChatSessions-Redis-red)](https://redis.io/)
 [![Built with matrix-nio](https://img.shields.io/badge/built%20with-matrix--nio-brightgreen)](https://github.com/poljar/matrix-nio)
-[![Docker](https://img.shields.io/badge/Docker-Compose-informational)](https://www.docker.com/)
 
 
 
