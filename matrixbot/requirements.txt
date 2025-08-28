@@ -1,2 +1,5 @@
 matrix-nio==0.25.2
 redis
+python-dotenv
+markdown
+requests
