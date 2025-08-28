@@ -1,6 +1,5 @@
 class CommandHandler:
-    """
-    Handles commands for the Matrix bot, including AI queries, resets, and
+    """Handles commands for the Matrix bot, including AI queries, resets, and
     help requests.
 
     Parameters
@@ -28,8 +27,7 @@ class CommandHandler:
         self.logger = logger
 
     async def handle_ai(self, room_id, user_id, query):
-        """
-        Process AI-related commands and respond accordingly.
+        """Process AI-related commands and respond accordingly.
 
         Parameters
         ----------
@@ -51,8 +49,7 @@ class CommandHandler:
         await self.matrix_client.send_message(room_id, response)
 
     async def handle_reset(self, room_id, user_id):
-        """
-        Reset the message history for a specific user in a channel.
+        """Reset the message history for a specific user in a channel.
         Parameters
         ----------
         room_id : str
@@ -66,8 +63,7 @@ class CommandHandler:
         )
 
     async def handle_help(self, room_id):
-        """
-        Display the help menu with available commands.
+        """Display the help menu with available commands.
         Parameters
         ----------
         room_id : str

@@ -10,8 +10,7 @@ class MatrixClient:
         self.config = config
 
     async def send_message(self, room_id, message, return_event_id=False):
-        """
-        Send a markdown-formatted message.
+        """Send a markdown-formatted message.
 
         Parameters
         ----------
@@ -48,8 +47,7 @@ class MatrixClient:
             return response.event_id
 
     async def edit_message(self, room_id, event_id, new_message):
-        """
-        Replace existing message based on event_id.
+        """Replace existing message based on event_id.
 
         Parameters
         ----------

@@ -14,6 +14,7 @@ logger = Logger(name="RAG Pipeline")
 
 
 async def main():
+    """Main function to run the Matrix bot."""
 
     # Use stored login creds if available
     use_saved_creds = bot_config.load_saved_login_creds()

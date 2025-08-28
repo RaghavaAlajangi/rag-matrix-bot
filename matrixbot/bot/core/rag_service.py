@@ -2,9 +2,8 @@ import requests
 
 
 class RAGService:
-    """
-    Service to handle retrieval-augmented generation (RAG) queries.
-    This service interacts with a RAG API to generate responses based on user
+    """Service to handle retrieval-augmented generation (RAG) queries. This
+    service interacts with a RAG API to generate responses based on user
     prompts and chat history.
     Parameters
     ----------
@@ -44,8 +43,7 @@ class RAGService:
         return "", response_text.strip()
 
     async def query_model(self, prompt, chat_history, logger):
-        """
-        Query RAG API.
+        """Query RAG API.
 
         Parameters
         ----------

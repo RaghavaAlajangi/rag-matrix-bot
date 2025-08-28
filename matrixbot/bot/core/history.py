@@ -4,9 +4,7 @@ import redis
 
 
 class RedisHistoryManager:
-    """
-    Manages conversation history using Redis for persistence.
-    """
+    """Manages conversation history using Redis for persistence."""
 
     def __init__(self, config):
         self.redis_client = redis.StrictRedis(

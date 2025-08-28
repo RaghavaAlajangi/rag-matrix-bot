@@ -3,9 +3,7 @@ import sys
 
 
 class Logger(logging.Logger):
-    """
-    Custom logger class for Matrix bot.
-    """
+    """Custom logger class for Matrix bot."""
 
     def __init__(
         self, name, level="INFO", filename="matrixbot.log", save_logfile=False

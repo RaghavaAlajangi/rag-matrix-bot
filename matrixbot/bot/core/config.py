@@ -10,6 +10,8 @@ resources_path = Path(__file__).parents[2] / "resources"
 
 
 class Config:
+    """Configuration class for the Matrix bot."""
+
     def __init__(self):
         # Matrix variables (bot user)
         self.homeserver = os.getenv("MATRIX_HOMESERVER")
