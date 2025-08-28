@@ -10,9 +10,10 @@
 [![Built with matrix-nio](https://img.shields.io/badge/built%20with-matrix--nio-brightgreen)](https://github.com/poljar/matrix-nio)
 
 
+> ⚡ A modular **Retrieval-Augmented Generation (RAG)** stack with **FastAPI backend**, **Matrix bot integration**, and **data ingestion pipeline** using Qdrant.
 
 
-> ⚡ A modular **Retrieval-Augmented Generation (RAG)** stack with **FastAPI backend**, **Matrix bot integration**, and **data ingestion pipeline** using Qdrant.  
+>  ⭐ If you like this project, don’t forget to **star** the repo! 
 
 ---
 
