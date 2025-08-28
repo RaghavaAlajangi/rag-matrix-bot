@@ -1,0 +1,11 @@
+python-dotenv
+
+qdrant_client
+openai
+
+# langchain stuff
+langchain
+langchain_community
+langchain_openai
+langchain_core
+langchain-qdrant
