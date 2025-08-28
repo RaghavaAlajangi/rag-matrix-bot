@@ -9,7 +9,6 @@
 [![Redis](https://img.shields.io/badge/ChatSessions-Redis-red)](https://redis.io/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-informational)](https://www.docker.com/)
 [![License](https://img.shields.io/github/license/RaghavaAlajangi/rag-matrix-bot)](LICENSE)
-[![OpenAPI](https://img.shields.io/badge/OpenAPI-Swagger_UI-green?logo=swagger)](http://localhost:8000/docs)
 
 
 > ⚡ A modular **Retrieval-Augmented Generation (RAG)** stack with **FastAPI backend**, **Matrix bot integration**, and **data ingestion pipeline** using Qdrant.  
