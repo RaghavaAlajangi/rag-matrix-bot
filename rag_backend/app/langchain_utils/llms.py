@@ -1,5 +1,4 @@
-from langchain.embeddings import OpenAIEmbeddings
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from openai import OpenAI
 
 from ..core.config import rag_config

@@ -5,7 +5,8 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
 from ..core.internal_auth import get_api_key
-from ..langchain_utils.chain import get_rag_chain, openai_client
+from ..langchain_utils.chain import get_rag_chain
+from ..langchain_utils.llms import openai_client
 from ..langchain_utils.prompts import get_prompt
 
 router = APIRouter(prefix="/rag")
@@ -38,7 +39,12 @@ def list_models():
 async def chat_api(query: QueryRequest, api_key: str = Depends(get_api_key)):
     """API endpoint for chat with given LLM.
 
-    Query format should be:
+    parameters
+    ----------
+    query: QueryRequest
+        The query request containing model name and chat history.
+
+    example:
     {
         "model": "meta-llama-3.1-8b-instruct",
         "chat_history": [
