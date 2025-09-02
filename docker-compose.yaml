@@ -43,6 +43,18 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage # Persists your vector data
     restart: always
+  
+  # Init script to create `rag_data` collection in Qdrant
+  qdrant-init:
+    image: alpine/curl:latest
+    container_name: qdrant-init
+    env_file:
+      - .env
+    volumes:
+      - ./qdrant/entrypoint.sh:/usr/local/bin/entrypoint.sh
+    depends_on:
+      - qdrant_db
+    entrypoint: ["/usr/local/bin/entrypoint.sh"]
 
   # Redis Database for caching
   redis_db:
