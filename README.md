@@ -5,9 +5,9 @@
 
 [![LangChain](https://img.shields.io/badge/LangChain-RAG-brightgreen)](https://www.langchain.com/)
 [![Qdrant](https://img.shields.io/badge/Vector%20DB-Qdrant-orange)](https://qdrant.tech/)
-[![License](https://img.shields.io/github/license/RaghavaAlajangi/rag-matrix-bot)](LICENSE)
 [![Redis](https://img.shields.io/badge/ChatSessions-Redis-red)](https://redis.io/)
 [![Built with matrix-nio](https://img.shields.io/badge/built%20with-matrix--nio-brightgreen)](https://github.com/poljar/matrix-nio)
+[![License](https://img.shields.io/github/license/RaghavaAlajangi/rag-matrix-bot)](LICENSE)
 
 
 > ⚡ A modular **Retrieval-Augmented Generation (RAG)** stack with **FastAPI backend**, **Matrix bot integration**, and **data ingestion pipeline** using Qdrant.
