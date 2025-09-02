@@ -14,7 +14,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./rag_backend/.env
+      - .env
     depends_on:
       - qdrant_db  # The backend depends on the vector database
     restart: always
@@ -25,7 +25,7 @@ services:
       context: ./matrixbot
     container_name: matrix_bot
     env_file:
-      - ./matrixbot/.env
+      - .env
     depends_on:
       - rag_backend  # The bot depends on the backend API
       - redis_db    # The bot depends on Redis for session management
@@ -38,6 +38,8 @@ services:
     ports:
       - "6333:6333"
       - "6334:6334"
+    env_file:
+      - .env
     volumes:
       - qdrant_data:/qdrant/storage # Persists your vector data
     restart: always
