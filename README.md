@@ -17,6 +17,11 @@
 
 ---
 
+
+<img width="900" height="577" alt="rag_pipeline_2" src="https://github.com/user-attachments/assets/e860ecfd-0be1-4cbc-ade6-f41f8be1564b" />
+
+
+
 ## 📌 Features
 - 📂 **Data Ingestion** → Upload & index documents into **Qdrant**  
 - 🤖 **Matrix Bot** → Chat with the RAG system inside **Matrix rooms**  
