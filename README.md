@@ -86,4 +86,4 @@ docker-compose up --build
 
 ## 🤝 Contributing
 
-PRs are welcome! Please follow conventional commits and run tests before submitting.
+PRs are welcome! Please follow conventional commits.
